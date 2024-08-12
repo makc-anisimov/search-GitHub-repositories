@@ -1,0 +1,10 @@
+@import url('../src/vendor/normalize.css');
+@import url('../src/vendor/fonts/Roboto/roboto.css');
+
+body {
+  margin: 0, auto;
+
+  background-color: rgb(255, 255, 255);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
