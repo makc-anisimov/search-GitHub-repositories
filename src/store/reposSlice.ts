@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 interface IOwner {
   login: string;
@@ -21,7 +21,7 @@ interface IOwner {
   site_admin: boolean;
 }
 
-export interface IRepositoryData {
+interface IRepositoryData {
   id: number;
   node_id: string;
   name: string;
@@ -52,28 +52,125 @@ export interface IRepositoryData {
   contributors_url: string;
   subscribers_url: string;
   subscription_url: string;
+  commits_url: string;
+  git_commits_url: string;
+  comments_url: string;
+  issue_comment_url: string;
+  contents_url: string;
+  compare_url: string;
+  merges_url: string;
+  archive_url: string;
+  downloads_url: string;
+  issues_url: string;
+  pulls_url: string;
+  milestones_url: string;
+  notifications_url: string;
+  labels_url: string;
+  releases_url: string;
+  deployments_url: string;
+  created_at: string;
+  updated_at: string;
+  pushed_at: string;
+  git_url: string;
+  ssh_url: string;
+  clone_url: string;
+  svn_url: string;
+  homepage: string | null;
+  size: number;
+  stargazers_count: number;
+  watchers_count: number;
+  language: string | null;
+  has_issues: boolean;
+  has_projects: boolean;
+  has_downloads: boolean;
+  has_wiki: boolean;
+  has_pages: boolean;
+  has_discussions: boolean;
+  forks_count: number;
+  mirror_url: string | null;
+  archived: boolean;
+  disabled: boolean;
+  open_issues_count: number;
+  license: {
+    key: string;
+    name: string;
+    spdx_id: string;
+    url: string;
+    node_id: string;
+  } | null;
+  allow_forking: boolean;
+  is_template: boolean;
+  web_commit_signoff_required: boolean;
+  topics: string[];
+  visibility: string;
+  forks: number;
+  open_issues: number;
+  watchers: number;
+  default_branch: string;
+  score: number;
 }
 
+// interface ReposState {
+//   results: IRepositoryData[];
+//   loading: boolean;
+//   error: string | null;
+// }
+
+export interface IRepoData {
+  id: number;
+  name: string;
+  description: string;
+  language: string;
+  updated_at: string;
+  stargazers_count: number;
+  forks_count: number;
+  license: {
+    name: string;
+    url: string;
+  } | null;
+}
 interface ReposState {
-  results: IRepositoryData[];
+  results: IRepoData[];
   loading: boolean;
   error: string | null;
 }
 
-export const fetchSearchRepos = createAsyncThunk<
-  IRepositoryData[],
-  string
->('repos/fetchSearchRepos', async (query: string) => {
-  const response = await fetch(`https://api.github.com/search/repositories?q=${query}`);
-  if (!response.ok) {
-    throw new Error('Произошла ошибка при поиске');
+// export const fetchSearchRepos = createAsyncThunk<
+// IRepoData[],
+//   string
+// >('repos/fetchSearchRepos', async (query: string) => {
+//   const response = await fetch(`https://api.github.com/search/repositories?q=${query}`);
+//   if (!response.ok) {
+//     throw new Error('Произошла ошибка при поиске');
+//   }
+//   const data = await response.json();
+//   return data.items;
+// });
+export const fetchSearchRepos = createAsyncThunk<IRepoData[], string>(
+  "repos/fetchSearchRepos",
+  async (query: string) => {
+    const response = await fetch(
+      `https://api.github.com/search/repositories?q=${query}`
+    );
+    if (!response.ok) {
+      throw new Error("Произошла ошибка при поиске");
+    }
+    const data = await response.json();
+    return data.items.map((repo: IRepositoryData) => ({
+      id: repo.id,
+      name: repo.name,
+      description: repo.description,
+      language: repo.language,
+      updated_at: repo.updated_at,
+      stargazers_count: repo.stargazers_count,
+      forks_count: repo.forks_count,
+      license: repo.license,
+    }));
   }
-  const data = await response.json();
-  return data.items;
-});
+);
 
 const reposSlice = createSlice({
-  name: 'repos',
+  name: "repos",
   initialState: {
     results: [],
     loading: false,
@@ -86,13 +183,16 @@ const reposSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchSearchRepos.fulfilled, (state, action: PayloadAction<IRepositoryData[]>) => {
-        state.loading = false;
-        state.results = action.payload;
-      })
+      .addCase(
+        fetchSearchRepos.fulfilled,
+        (state, action: PayloadAction<IRepoData[]>) => {
+          state.loading = false;
+          state.results = action.payload;
+        }
+      )
       .addCase(fetchSearchRepos.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Произошла ошибка при поиске';
+        state.error = action.error.message || "Произошла ошибка при поиске";
       });
   },
 });

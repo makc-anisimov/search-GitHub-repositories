@@ -1,18 +1,18 @@
 .app {
+  display: flex;
   margin: 0 auto;
-  max-width: 1440px;
-  height: 100vh;
-
+  // max-width: 1440px;
 
   &__main {
     height: calc(100% - 112px);
     display: flex;
     flex-direction: column;
+    min-height: calc(100vh - 112px);
   }
 
-
   &__title {
-    margin: auto;
+    // margin: auto;
+    display: flex;
     color: rgb(79, 79, 79);
     font-family: Roboto;
     font-size: 46px;
