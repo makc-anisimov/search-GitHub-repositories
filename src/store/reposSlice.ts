@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
+// описание структуры данных в ответе api
+//... Owner
 interface IOwner {
   login: string;
   id: number;
@@ -20,7 +22,7 @@ interface IOwner {
   type: string;
   site_admin: boolean;
 }
-
+//  ... структура объекта репозитория
 interface IRepositoryData {
   id: number;
   node_id: string;
@@ -110,13 +112,8 @@ interface IRepositoryData {
   score: number;
 }
 
-// interface ReposState {
-//   results: IRepositoryData[];
-//   loading: boolean;
-//   error: string | null;
-// }
-
-export interface IRepoData {
+// описание структуры данных для хранения 
+interface IRepoData {
   id: number;
   name: string;
   description: string;
@@ -135,17 +132,7 @@ interface ReposState {
   error: string | null;
 }
 
-// export const fetchSearchRepos = createAsyncThunk<
-// IRepoData[],
-//   string
-// >('repos/fetchSearchRepos', async (query: string) => {
-//   const response = await fetch(`https://api.github.com/search/repositories?q=${query}`);
-//   if (!response.ok) {
-//     throw new Error('Произошла ошибка при поиске');
-//   }
-//   const data = await response.json();
-//   return data.items;
-// });
+
 export const fetchSearchRepos = createAsyncThunk<IRepoData[], string>(
   "repos/fetchSearchRepos",
   async (query: string) => {

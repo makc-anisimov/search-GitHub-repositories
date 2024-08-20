@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
 import styles from "./header.module.scss";
-// import { useDispatch } from 'react-redux';
 
 interface IHeaderProps {
   onSubmit: (query: string) => void;
@@ -9,7 +8,6 @@ interface IHeaderProps {
 
 export const Header: React.FC<IHeaderProps> = ({ onSubmit }) => {
   const [inputValue, setInputValue] = useState<string>("");
-  // const dispatch = useDispatch();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);

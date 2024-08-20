@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import {
   Table,
   TableBody,
@@ -10,7 +9,6 @@ import {
   TablePagination,
   TableSortLabel,
 } from "@mui/material";
-// import StarIcon from "../../shared/icons/star.svg";
 import styles from "./repos.module.scss";
 import Star from "@/shared/icons/star/star";
 
@@ -36,7 +34,7 @@ interface SortDirection {
   [key: string]: "asc" | "desc";
 }
 
-const RepositoryData: React.FC<IRepositoryData> = ({ data }) => {
+export const RepositoryData: React.FC<IRepositoryData> = ({ data }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [sortColumn, setSortColumn] = useState<keyof Repository>("name");
@@ -239,4 +237,4 @@ const RepositoryData: React.FC<IRepositoryData> = ({ data }) => {
   );
 };
 
-export default RepositoryData;
+// export default RepositoryData;

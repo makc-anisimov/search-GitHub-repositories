@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import styles from "./app.module.scss";
 import { Header } from "../header/header";
 import { Footer } from "../footer/footer";
+import { Greeting } from "@/widgets/greeting/greeting";
+import { RepositoryData } from "../repos/repos";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
-import { fetchSearchRepos /* IRepoData */ } from "@/store/reposSlice";
+import { fetchSearchRepos } from "@/store/reposSlice";
 import useAppDispatch from "@/hooks/useAppDispatch";
-import { Greeting } from "@/widgets/greeting/greeting";
-import RepositoryData from "../repos/repos";
+import styles from "./app.module.scss";
 
 const App = () => {
   const [isShowGreeting, setIsShowGreeting] = useState<boolean>(true);
