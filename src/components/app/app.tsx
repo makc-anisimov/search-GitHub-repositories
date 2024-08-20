@@ -4,54 +4,49 @@ import { Header } from "../header/header";
 import { Footer } from "../footer/footer";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
-import { fetchSearchRepos, /* IRepoData */} from "@/store/reposSlice";
+import { fetchSearchRepos /* IRepoData */ } from "@/store/reposSlice";
 import useAppDispatch from "@/hooks/useAppDispatch";
 import { Greeting } from "@/widgets/greeting/greeting";
-import  RepositoryTable  from "../repos/repos";
+import RepositoryData from "../repos/repos";
 
 const App = () => {
-  const [isShowGreeting, SetIsShowGreeting] = useState<boolean>(true);
+  const [isShowGreeting, setIsShowGreeting] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const { results, loading, error } = useSelector(
     (state: RootState) => state.repos
   );
 
   const handleSearch = (query: string) => {
-    if (isShowGreeting) SetIsShowGreeting(false);
+    if (isShowGreeting) setIsShowGreeting(false);
     dispatch(fetchSearchRepos(query));
   };
 
   return (
-    <>
+    <div className={styles.app}>
       <Header onSubmit={handleSearch} />
-      <main className={styles.app}>
-        <div className={styles.app__main}>
-          {isShowGreeting ? (
-            <Greeting />
-          ) : (
-            <>
-              {loading && <h1 className={styles.app__title}>Загрузка...</h1>}
-              {error && <h1 className={styles.app__title}>{error}</h1>}
-              <RepositoryTable 
-               data={results} 
-              />
-              {/* <ul>
-                {results.map((result: IRepoData) => (
-                  <li key={result.id}>
-                    <h3>{result.name}</h3>
-                    <p>{result.description}</p>
-                    <a href={result.html_url} target="_blank" rel="noreferrer">
-                      Открыть на GitHub
-                    </a>
-                  </li>
-                ))}
-              </ul> */}
-            </>
-          )}
-        </div>
+      <main className={styles.app__main}>
+        {isShowGreeting ? (
+          <Greeting />
+        ) : (
+          <>
+            {error && (
+              <div className={styles.app__titleContainer}>
+                <h2 className={styles.app__title}>{error}</h2>
+              </div>
+             )}
+            {loading && (
+              <div className={styles.app__titleContainer}>
+              <h2 className={styles.app__title}>Загрузка...</h2>
+              </div>
+            )}
+            {(!error && !loading) && (
+              <RepositoryData data={results} />
+            )}
+          </>
+        )}
       </main>
       <Footer />
-    </>
+    </div>
   );
 };
 

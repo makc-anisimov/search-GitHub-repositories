@@ -15,31 +15,31 @@ export const Header: React.FC<IHeaderProps> = ({ onSubmit }) => {
     setInputValue(event.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event: React.ChangeEvent<HTMLFormElement>) => {
+    event.preventDefault();
     onSubmit(inputValue);
   };
 
   return (
     <header className={styles.header}>
-      <div className={styles.header__searchForm}>
+      <form className={styles.header__searchForm} onSubmit={handleSubmit}>
         <input
           required
           className={styles.header__input}
           value={inputValue}
           onChange={handleInputChange}
-          // variant="outlined"
           type="text"
           placeholder="Введите поисковый запрос"
         />
         <Button
           className={styles.header__searchButton}
+          type="submit"
           variant="contained"
-          onClick={handleSubmit}
-          disabled={!(inputValue.length>0)}
+          disabled={!(inputValue.length > 0)}
         >
           Искать
         </Button>
-      </div>
+      </form>
     </header>
   );
 };
