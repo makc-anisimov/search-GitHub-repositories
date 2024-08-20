@@ -29,4 +29,4 @@ npm run dev
 
 Откройте  http://localhost:3000/ в вашем браузере, чтобы просмотреть приложение.
 
-Приложение доступно по ссылке: 
+Приложение доступно по ссылке: https://search-git-hub-repositories.vercel.app/
