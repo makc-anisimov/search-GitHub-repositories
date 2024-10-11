@@ -1,4 +1,4 @@
-https://search-git-hub-repositories.vercel.app/
+Приложение доступно по ссылке: https://search-git-hub-repositories.vercel.app/
 
 ## Описание
 мини-приложение для поиска информации по названию репозитория на GitHub
@@ -29,4 +29,3 @@ npm run dev
 
 Откройте  http://localhost:3000/ в вашем браузере, чтобы просмотреть приложение.
 
-Приложение доступно по ссылке: https://search-git-hub-repositories.vercel.app/
